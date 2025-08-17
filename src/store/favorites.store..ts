@@ -1,11 +1,11 @@
 import { create } from 'zustand';
 
-type FavouriteStore = {
+type FavoriteStore = {
   favouries: number[];
   toggle: (id: number) => void;
 };
 
-export const useFavouriteStore = create<FavouriteStore>()((set) => ({
+export const useFavoriteStore = create<FavoriteStore>()((set) => ({
   favouries: [],
   toggle: (id) =>
     set((state) => ({

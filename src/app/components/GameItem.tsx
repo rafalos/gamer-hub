@@ -1,5 +1,6 @@
 'use client';
-import { useFavouriteStore } from '@/store';
+
+import { useFavoriteStore } from '@/store/favorites.store.';
 import { Game } from '@/types';
 import React from 'react';
 
@@ -10,18 +11,18 @@ type Props = {
 const GameItem = ({ game }: Props) => {
   const { description, genre, id, platform, title } = game;
 
-  const { favouries, toggle: toggleFavourite } = useFavouriteStore(
+  const { favouries, toggle: toggleFavorite } = useFavoriteStore(
     (state) => state
   );
 
-  const isFavourite = favouries.includes(id);
+  const isFavorite = favouries.includes(id);
 
   return (
     <li
-      onClick={() => toggleFavourite(id)}
+      onClick={() => toggleFavorite(id)}
       key={id}
       className={`ring-2 p-4 flex flex-col hover:bg-gray-700 hover:cursor-pointer ${
-        isFavourite ? 'bg-gray-800' : ''
+        isFavorite ? 'bg-gray-800' : ''
       }`}
     >
       <p>{title}</p>

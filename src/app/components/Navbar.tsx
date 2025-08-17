@@ -1,10 +1,10 @@
 'use client'
 
-import { useFavouriteStore } from '@/store';
+import { useFavoriteStore } from '@/store/favorites.store.';
 import React from 'react';
 
 const Navbar = () => {
-  const favourites = useFavouriteStore((state) => state.favouries);
+  const favourites = useFavoriteStore((state) => state.favouries);
 
   return (
     <nav className='h-12 w-full border-b-2 border-white'>
