@@ -1,15 +1,25 @@
 'use client';
 
 import { useFavoriteStore } from '@/store/favorites.store.';
-import { Game } from '@/types';
+import { Game } from '@/types/api';
 import React from 'react';
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import Image from 'next/image';
 
 type Props = {
   game: Game;
 };
 
 const GameItem = ({ game }: Props) => {
-  const { description, genre, id, platform, title } = game;
+  const { name, platforms, released, background_image, id } = game;
 
   const { favouries, toggle: toggleFavorite } = useFavoriteStore(
     (state) => state
@@ -18,18 +28,19 @@ const GameItem = ({ game }: Props) => {
   const isFavorite = favouries.includes(id);
 
   return (
-    <li
-      onClick={() => toggleFavorite(id)}
-      key={id}
-      className={`ring-2 p-4 flex flex-col hover:bg-gray-700 hover:cursor-pointer ${
-        isFavorite ? 'bg-gray-800' : ''
-      }`}
-    >
-      <p>{title}</p>
-      <p>{genre}</p>
-      <p>{platform}</p>
-      <p>{description}</p>
-    </li>
+    <Card className='p-0 gap-0'>
+      <CardHeader className='bg-slate-800 text-white p-2'>
+        <CardTitle>{name}</CardTitle>
+        <CardDescription>Card Description</CardDescription>
+      </CardHeader>
+      <CardContent
+        className='bg-cover bg-center w-2xl text-white h-[200px]'
+        style={{ backgroundImage: `url(${game.background_image})` }}
+      ></CardContent>
+      <CardFooter>
+        <p>Card Footer</p>
+      </CardFooter>
+    </Card>
   );
 };
 
