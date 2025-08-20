@@ -1,11 +1,24 @@
+import { Button } from '@/components/ui/button';
+import { auth } from '@/lib/auth';
+import { headers } from 'next/headers';
+import { redirect } from 'next/navigation';
 import React from 'react';
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 const Page = async () => {
-  const test = await Promise.resolve('test')
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
-  console.log(test)
-  return <div>Page</div>;
+  if (!session) {
+    redirect('/auth');
+  }
+
+  return (
+    <div>
+      <Button>Logout</Button>
+    </div>
+  );
 };
 
 export default Page;

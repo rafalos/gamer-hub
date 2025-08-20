@@ -19,8 +19,8 @@ export const metadata: Metadata = {
 
 const Artifacts = () => (
   <>
-    <div className='w-[50%] h-[50%] bg-primary/8 rounded-full absolute right-0 blur-3xl'></div>
-    <div className='w-[50%] h-[50%] bg-black/8 rounded-full absolute left-0 bottom-0 blur-3xl'></div>
+    <div className='w-[50%] h-[70%] bg-primary/8 rounded-full absolute right-0 blur-3xl z-[-1]'></div>
+    <div className='w-[50%] h-[70%] bg-black/8 rounded-full absolute left-0 bottom-0 blur-3xl z-[-1]'></div>
   </>
 );
 

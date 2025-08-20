@@ -2,9 +2,9 @@
 
 import { Button } from '@/components/ui/button';
 import { LucideGamepad2 } from 'lucide-react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useRef, useState } from 'react';
+import Heading from './Heading';
 
 const Hero = () => {
   const gamepadIconRef = useRef<SVGSVGElement | null>(null);
@@ -12,13 +12,8 @@ const Hero = () => {
   const router = useRouter();
 
   return (
-    <div className='text-5xl lg:text-8xl font-bold animate-in relative flex flex-col items-center'>
-      <h1>
-        <span className='bg-primary text-white rounded-md p-2 inline'>
-          Gamer
-        </span>
-        <span className='relative top-4 lg:top-5'>HUB</span>
-      </h1>
+    <div className='flex flex-col items-center'>
+      <Heading />
       <div className='flex relative top-5 justify-center items-center gap-4 w-full'>
         <Button
           className='flex-1 font-bold h-16 text-2xl relative cursor-pointer'
