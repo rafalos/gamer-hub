@@ -1,5 +1,4 @@
-import { mockGames } from '@/db/seed';
-import { getGames } from '@/lib/gameApi';
+import { getByName } from '@/lib/gameApi';
 import { NextRequest } from 'next/server';
 
 export async function GET(request: NextRequest) {
@@ -13,11 +12,11 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  const games = await getGames(query);
+  const games = await getByName(query);
 
   const { results } = games;
 
-  console.log(`fetched ${results.length} games`)
+  console.log(`fetched ${results.length} games`);
 
   return Response.json(results);
 }

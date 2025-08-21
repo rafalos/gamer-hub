@@ -9,7 +9,7 @@ function Layout({
   return (
     <div>
       <Navbar />
-      <main className='max-w-[1440px] mx-auto'>{children}</main>
+      <main className='max-w-[1440px] mx-auto p-2'>{children}</main>
     </div>
   );
 }
