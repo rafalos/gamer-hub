@@ -73,7 +73,7 @@ const RegisterForm = ({ email }: Props) => {
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name:</FormLabel>
+              <FormLabel>Display name:</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>

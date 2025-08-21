@@ -20,9 +20,10 @@ type Props = {
   onCheckEmail: (emailExists: boolean) => void;
   onSetStatus: (message: string) => void;
   onSetEmail: (email: string) => void;
+  error: boolean;
 };
 
-const BaseForm = ({ onCheckEmail, onSetStatus, onSetEmail }: Props) => {
+const BaseForm = ({ onCheckEmail, onSetStatus, onSetEmail, error }: Props) => {
   const form = useForm<{
     email: string;
   }>({
@@ -37,6 +38,8 @@ const BaseForm = ({ onCheckEmail, onSetStatus, onSetEmail }: Props) => {
   });
 
   const onSubmit = async ({ email }: { email: string }) => {
+    if (error) return;
+
     try {
       await axios.post('/api/auth/verify_user', {
         email,
