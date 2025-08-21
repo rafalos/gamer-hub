@@ -31,7 +31,7 @@ export async function POST(request: Request) {
   if (!hashExists) {
     return Response.json(
       {
-        message: 'Please use github provider to login',
+        message: 'It looks that account has previously signed in using GitHub. Please continue by signing in with GitHub again.',
       },
       {
         status: 403,

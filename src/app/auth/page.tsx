@@ -35,9 +35,7 @@ const Auth = () => {
       <div className='flex flex-col w-full md:max-w-[600px] mx-auto gap-4 p-4'>
         <Heading className='mb-8' />
         {getForm()}
-        {error && (
-          <Notification text='It looks like you previously signed in using GitHub. Please continue by signing in with GitHub again.' />
-        )}
+        {error && <Notification text={error} />}
         <Button
           type='button'
           variant='secondary'
@@ -45,6 +43,7 @@ const Auth = () => {
           onClick={async () => {
             await authClient.signIn.social({
               provider: 'github',
+              callbackURL: '/home',
             });
           }}
         >
