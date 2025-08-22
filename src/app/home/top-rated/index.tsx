@@ -10,7 +10,7 @@ const TopRated = async () => {
     'http://localhost:3000/api/games/popular'
   );
 
-  const games = popularGames.data.splice(1,6);
+  const games = popularGames.data.splice(1, 6);
   return (
     <Box title='Top rated games'>
       <ItemGrid
