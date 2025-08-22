@@ -34,6 +34,8 @@ const GameItem = ({ game }: Props) => {
       platform == 'pc'
   );
 
+  console.log(uniquePlatforms)
+
   return (
     <Card className='p-0 gap-0 w-full bg-[#2B2D42] hover:scale-105 hover:cursor-pointer transition-transform'>
       <CardHeader className='grid-cols-[repeat(auto-fit,minmax(0,1fr))] justify-items-center text-accent p-2 text-center'>
@@ -44,7 +46,7 @@ const GameItem = ({ game }: Props) => {
           >
             <Image
               alt={`${platform} logo`}
-              src={`icons/platforms/${platform.toLowerCase()}.svg`}
+              src={`/icons/platforms/${platform.toLowerCase()}.svg`}
               width={20}
               height={20}
             />
@@ -55,7 +57,7 @@ const GameItem = ({ game }: Props) => {
         <Image
           sizes='400px'
           className='object-cover'
-          src={`${background_image}` || '/placeholder.svg'}
+          src={`${background_image ?? '/placeholder.svg' }`}
           alt={name}
           fill
           placeholder='blur'

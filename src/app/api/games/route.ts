@@ -14,9 +14,5 @@ export async function GET(request: NextRequest) {
 
   const games = await getByName(query);
 
-  const { results } = games;
-
-  console.log(`fetched ${results.length} games`);
-
-  return Response.json(results);
+  return Response.json(games);
 }
