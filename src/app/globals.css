@@ -115,6 +115,10 @@
 @theme {
   --animate-wiggle: wiggle 5s ease-in-out infinite;
   --animate-spin-scale: spin-scale 1s linear 1;
+  --color-playstation: #2e6db4;
+  --color-xbox: #2ca243;
+  --color-nintendo: #dd2020;
+  --color-pc: #a5a2a2;
 
   @keyframes wiggle {
     0%,

@@ -10,8 +10,4 @@ redisClient.on('error', (error) =>
 
 await redisClient.connect();
 
-
-await redisClient.ping()
-const keys = await redisClient.keys("*")
-console.log(keys)
 export default redisClient;
