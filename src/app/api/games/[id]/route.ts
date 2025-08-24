@@ -1,17 +1,17 @@
-import { getById } from '@/lib/gameApi';
+import { getGameByRawgId } from '@/db/queries';
+import { fetchGame } from '@/lib/fetchers';
 
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } = await params;
+  const { id: rawg_id } = await params;
 
-  console.log(id);
-  const game = await getById(id);
+  const game = await getGameByRawgId(rawg_id);
 
+  if (game) return Response.json(game);
 
-  console.log(game)
-  return Response.json({
-    status: 'ok',
-  });
+  const result = await fetchGame(rawg_id);
+
+  return Response.json(result);
 }

@@ -11,7 +11,7 @@ export const getResourceUrl = (resource: Resource, id?: string) =>
     .RAWG_APIKEY!}`;
 
 const GAMES_URL = getResourceUrl('games');
-const gameByIdUrl = (id: string) => getResourceUrl('games', id);
+export const getGameByIdUrl = (id: string) => getResourceUrl('games', id);
 
 export const getByName = async (query: string) => {
   const CACHE_KEY = `search_${query}`;
@@ -52,17 +52,9 @@ export const getPopular = async () => {
 };
 
 export const getById = async (id: string) => {
-  const CACHE_KEY = `game_${id}`;
-
-  const cachedResults = await redisClient.get(CACHE_KEY);
-
-  if (cachedResults) {
-    return JSON.parse(cachedResults) as Game;
-  }
-
-  const response = await axios.get<GamesResponse>(gameByIdUrl(id));
+  const response = await axios.get<Game>(getGameByIdUrl(id));
 
   const game = response.data;
-  await redisClient.setEx(CACHE_KEY, 60 * 60, JSON.stringify(game));
+
   return game;
 };

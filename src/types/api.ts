@@ -14,6 +14,7 @@ export interface Game {
   slug: string;
   name: string;
   released: string | null;
+  description: string;
   tba: boolean;
   background_image: string | null;
   rating: number;
@@ -29,6 +30,7 @@ export interface Game {
   updated: string;
   esrb_rating: EsrbRating | null;
   platforms: PlatformEntry[];
+  genres: Genre[]
 }
 
 export interface Rating {

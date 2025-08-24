@@ -5,6 +5,7 @@ import {
   timestamp,
   boolean,
   integer,
+  serial,
 } from 'drizzle-orm/pg-core';
 
 export const user = pgTable('user', {
@@ -92,12 +93,13 @@ export const platformsRelations = relations(platforms, ({ many }) => ({
 }));
 
 export const games = pgTable('games', {
-  id: text('id').primaryKey(),
+  id: serial('id').primaryKey().unique(),
   name: text('name').notNull(),
   description: text('description'),
-  metacritic_score: text('metacritic_score'),
+  metacritic_score: integer('metacritic_score'),
   released: text('released'),
   background_image: text('background_image'),
+  rawg_id: text('rawg_id').unique()
 });
 
 export const gamesRelations = relations(games, ({ many }) => ({
@@ -106,10 +108,10 @@ export const gamesRelations = relations(games, ({ many }) => ({
 }));
 
 export const gamesToPlatforms = pgTable('games_to_platforms', {
-  game_id: text('id')
+  game_id: text('game_id')
     .notNull()
-    .references(() => games.id),
-  platform_id: text('id')
+    .references(() => games.rawg_id),
+  platform_id: text('platform_id')
     .notNull()
     .references(() => platforms.id),
 });
@@ -119,7 +121,7 @@ export const gamesToPlatformsRelations = relations(
   ({ one }) => ({
     game: one(games, {
       fields: [gamesToPlatforms.game_id],
-      references: [games.id],
+      references: [games.rawg_id],
     }),
     platform: one(platforms, {
       fields: [gamesToPlatforms.platform_id],
@@ -129,10 +131,10 @@ export const gamesToPlatformsRelations = relations(
 );
 
 export const gamesToGenres = pgTable('games_to_genres', {
-  game_id: text('id')
+  game_id: text('game_id')
     .notNull()
-    .references(() => games.id),
-  genre_id: text('id')
+    .references(() => games.rawg_id),
+  genre_id: text('genre_id')
     .notNull()
     .references(() => genres.id),
 });
@@ -140,7 +142,7 @@ export const gamesToGenres = pgTable('games_to_genres', {
 export const gamesToGenresRelations = relations(gamesToGenres, ({ one }) => ({
   game: one(games, {
     fields: [gamesToGenres.game_id],
-    references: [games.id],
+    references: [games.rawg_id],
   }),
   platform: one(genres, {
     fields: [gamesToGenres.genre_id],

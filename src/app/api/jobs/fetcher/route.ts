@@ -1,7 +1,8 @@
-import { fetchGenres } from '@/lib/fetchers';
+import { fetchGenres, fetchPlatforms } from '@/lib/fetchers';
 
 export async function GET() {
   await fetchGenres();
+  await fetchPlatforms()
 
   console.log('Job finished');
 

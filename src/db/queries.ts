@@ -1,6 +1,6 @@
 import { eq } from 'drizzle-orm';
 import db from '.';
-import { account, genres, user } from './schema';
+import { account, games, genres, user } from './schema';
 
 export const checkUserEmail = async (
   email: string
@@ -26,4 +26,13 @@ export const getGenres = async () => {
   const foundGenres = await db.select().from(genres);
 
   return foundGenres;
+};
+
+export const getGameByRawgId = async (id: string) => {
+  const foundGames = await db
+    .select()
+    .from(games)
+    .where(eq(games.rawg_id, id));
+
+  return foundGames[0];
 };
