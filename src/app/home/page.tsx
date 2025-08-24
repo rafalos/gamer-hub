@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation';
 import React, { Suspense } from 'react';
 import MostPopular from './top-rated';
 import { ItemGridSkeleton } from '@/components/Skeletons';
+import Genres from './genres';
 
 const Page = async () => {
   const session = await auth.api.getSession({
@@ -15,9 +16,12 @@ const Page = async () => {
   }
 
   return (
-    <Suspense fallback={<ItemGridSkeleton />}>
-      <MostPopular />
-    </Suspense>
+    <div>
+      <Genres />
+      <Suspense fallback={<ItemGridSkeleton />}>
+        <MostPopular />
+      </Suspense>
+    </div>
   );
 };
 

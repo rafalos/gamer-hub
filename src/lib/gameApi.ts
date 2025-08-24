@@ -3,13 +3,15 @@ import axios from 'axios';
 import redisClient from './redis';
 import { Game } from '@/types/api';
 
-type Resource = 'games';
-const PLATFORMS = ['2', '187', '1', '18', '186', '7', '14', '16', '15']
+type Resource = 'games' | 'platforms' | 'genres';
+const PLATFORMS = ['2', '187', '1', '18', '186', '7', '14', '16', '15'];
 
-const getResourceUrl = (resource: Resource) =>
-  `https://api.rawg.io/api/${resource}?key=${process.env.RAWG_APIKEY!}`;
+export const getResourceUrl = (resource: Resource, id?: string) =>
+  `https://api.rawg.io/api/${resource}${id ? `/${id}` : ''}?key=${process.env
+    .RAWG_APIKEY!}`;
 
 const GAMES_URL = getResourceUrl('games');
+const gameByIdUrl = (id: string) => getResourceUrl('games', id);
 
 export const getByName = async (query: string) => {
   const CACHE_KEY = `search_${query}`;
@@ -21,10 +23,12 @@ export const getByName = async (query: string) => {
   }
 
   const response = await axios.get<GamesResponse>(
-    `${GAMES_URL}&search=${query}&platforms=${PLATFORMS.join(',')}`
+    `${GAMES_URL}&search=${query}&platforms=${PLATFORMS.join(
+      ','
+    )}&search_precise=true`
   );
 
-  const games = response.data.results;
+  const games = response.data.results.filter((game) => game.ratings_count > 30);
   await redisClient.setEx(CACHE_KEY, 60 * 60, JSON.stringify(games));
   return games;
 };
@@ -45,4 +49,20 @@ export const getPopular = async () => {
   const games = response.data.results;
   await redisClient.setEx(CACHE_KEY, 60 * 60, JSON.stringify(games));
   return games;
+};
+
+export const getById = async (id: string) => {
+  const CACHE_KEY = `game_${id}`;
+
+  const cachedResults = await redisClient.get(CACHE_KEY);
+
+  if (cachedResults) {
+    return JSON.parse(cachedResults) as Game;
+  }
+
+  const response = await axios.get<GamesResponse>(gameByIdUrl(id));
+
+  const game = response.data;
+  await redisClient.setEx(CACHE_KEY, 60 * 60, JSON.stringify(game));
+  return game;
 };

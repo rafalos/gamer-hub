@@ -20,7 +20,7 @@ export const ItemSkeleton = () => (
         <Skeleton className='h-2 w-full' />
       </div>
     </div>
-      <Skeleton className='h-24 w-full'/>
+      <Skeleton className='h-36 w-full'/>
       <Skeleton className='h-8 w-full'/>
   </div>
 );

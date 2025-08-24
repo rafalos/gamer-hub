@@ -1,9 +1,13 @@
-export interface GamesResponse {
+export interface RawgResponse<T> {
   count: number;
   next: string | null;
   previous: string | null;
-  results: Game[];
+  results: T[];
 }
+
+export type GamesResponse = RawgResponse<Game>;
+export type PlatformResponse = RawgResponse<Platform>;
+export type GenresResponse = RawgResponse<Genre>;
 
 export interface Game {
   id: number;
@@ -41,12 +45,12 @@ export interface EsrbRating {
 }
 
 export interface PlatformEntry {
-  platform: Platform;
+  platform: GamePlatform;
   released_at: string | null;
   requirements: PlatformRequirements | null;
 }
 
-export interface Platform {
+export interface GamePlatform {
   id: number;
   slug: string;
   name: string;
@@ -55,4 +59,23 @@ export interface Platform {
 export interface PlatformRequirements {
   minimum: string | null;
   recommended: string | null;
+}
+
+export interface Platform {
+  id: number;
+  name: string;
+  slug: string;
+  image?: string | null;
+  year_start?: number | null;
+  year_end?: number | null;
+  games_count?: number | null;
+  released_at?: string | null;
+}
+
+export interface Genre {
+  id: number;
+  name: string;
+  slug: string;
+  games_count: number;
+  image_background: string;
 }

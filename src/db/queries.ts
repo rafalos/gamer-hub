@@ -1,6 +1,6 @@
 import { eq } from 'drizzle-orm';
 import db from '.';
-import { account, user } from './schema';
+import { account, genres, user } from './schema';
 
 export const checkUserEmail = async (
   email: string
@@ -20,4 +20,10 @@ export const checkUserEmail = async (
   }
 
   return [false, false];
+};
+
+export const getGenres = async () => {
+  const foundGenres = await db.select().from(genres);
+
+  return foundGenres;
 };

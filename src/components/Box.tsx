@@ -7,9 +7,9 @@ type Props = {
 
 const Box = ({ children, title }: Props) => {
   return (
-    <div className='border-t-4 border-b-4 border-primary p-4 '>
-      <h2 className='text-2xl font-bold relative bottom-8 left-9 bg-white inline px-4'>
-        {title.toUpperCase()}
+    <div className='border-s2 border-primary rounded-lg p-4 bg-white'>
+      <h2 className='text-2xl font-bold bg-white inline'>
+        {title}
       </h2>
       {children}
     </div>

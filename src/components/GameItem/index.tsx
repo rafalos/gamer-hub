@@ -7,6 +7,7 @@ import {
   CardFooter,
   CardHeader,
 } from '@/components/ui/card';
+import Actions from './Actions';
 
 type Props = {
   game: Game;
@@ -34,17 +35,16 @@ const GameItem = ({ game }: Props) => {
       platform == 'pc'
   );
 
-  console.log(uniquePlatforms)
-
   return (
-    <Card className='p-0 gap-0 w-full bg-[#2B2D42] hover:scale-105 hover:cursor-pointer transition-transform'>
-      <CardHeader className='grid-cols-[repeat(auto-fit,minmax(0,1fr))] justify-items-center text-accent p-2 text-center'>
+    <Card className='p-0 gap-0 w-full hover:cursor-pointer transition-transform justify-between'>
+      <CardHeader className='grid-cols-[repeat(auto-fit,minmax(0,30px))] justify-items-center text-accent p-2 text-center'>
         {uniquePlatforms.map((platform) => (
           <div
             key={platform}
             className={`${platformColors[platform]} 0 w-full flex justify-center rounded-md`}
           >
             <Image
+              className='m-1'
               alt={`${platform} logo`}
               src={`/icons/platforms/${platform.toLowerCase()}.svg`}
               width={20}
@@ -57,19 +57,17 @@ const GameItem = ({ game }: Props) => {
         <Image
           sizes='400px'
           className='object-cover'
-          src={`${background_image ?? '/placeholder.svg' }`}
+          src={`${background_image ?? '/placeholder.svg'}`}
           alt={name}
           fill
           placeholder='blur'
           blurDataURL='/placeholder.svg'
         />
-        <div className='absolute w-full h-full bg-black/70 left-0 top-0 flex justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity'>
-          <p className='text-accent font-bold'>Add to library</p>
-        </div>
       </CardContent>
-      <CardFooter className='text-accent h-12 flex items-center justify-center p-4 text-sm font-bold'>
+      <CardFooter className='flex items-center justify-center flex-col text-black p-4 text-sm font-bold'>
         {name}
       </CardFooter>
+      <Actions id={id}/>
     </Card>
   );
 };
