@@ -3,6 +3,8 @@ import { RedisClientType, createClient } from 'redis';
 let redisClient: RedisClientType | null = null;
 
 export const getRedisClient = async () => {
+  if (redisClient) return redisClient;
+
   redisClient = createClient({
     username: process.env.REDIS_USERNAME,
     password: process.env.REDIS_PASSWORD,
@@ -12,11 +14,11 @@ export const getRedisClient = async () => {
     },
   });
 
+  await redisClient.connect();
+
   redisClient.on('error', (error) =>
     console.error('Error connecting to the redis service', error)
   );
 
   return redisClient;
 };
-
-export default redisClient;
