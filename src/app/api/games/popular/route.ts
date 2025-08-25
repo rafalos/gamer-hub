@@ -1,4 +1,4 @@
-import { getPopular } from '@/lib/gameApi';
+import { getPopular } from '@/lib/server/rawg-api';
 
 export async function GET() {
   const games = await getPopular();

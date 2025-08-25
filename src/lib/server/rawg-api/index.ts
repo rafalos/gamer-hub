@@ -1,19 +1,14 @@
+'use server';
+
 import { GamesResponse } from '@/types/api';
 import axios from 'axios';
-import redisClient from './redis';
+import { getRedisClient } from '../redis';
 import { Game } from '@/types/api';
-
-type Resource = 'games' | 'platforms' | 'genres';
-const PLATFORMS = ['2', '187', '1', '18', '186', '7', '14', '16', '15'];
-
-export const getResourceUrl = (resource: Resource, id?: string) =>
-  `https://api.rawg.io/api/${resource}${id ? `/${id}` : ''}?key=${process.env
-    .RAWG_APIKEY!}`;
-
-const GAMES_URL = getResourceUrl('games');
-export const getGameByIdUrl = (id: string) => getResourceUrl('games', id);
+import { GAMES_URL, PLATFORMS, getGameByIdUrl } from './helpers';
 
 export const getByName = async (query: string) => {
+  const redisClient = await getRedisClient();
+
   const CACHE_KEY = `search_${query}`;
 
   const cachedResults = await redisClient.get(CACHE_KEY);
@@ -34,6 +29,7 @@ export const getByName = async (query: string) => {
 };
 
 export const getPopular = async () => {
+  const redisClient = await getRedisClient();
   const CACHE_KEY = 'popular';
 
   const cachedResults = await redisClient.get(CACHE_KEY);

@@ -1,4 +1,4 @@
-import { fetchGenres, fetchPlatforms } from '@/lib/fetchers';
+import { fetchGenres, fetchPlatforms } from '@/lib/server/fetchers';
 
 export async function GET() {
   await fetchGenres();

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getResourceUrl } from '../gameApi';
+import { getResourceUrl } from '../rawg-api/helpers';
 import { Genre, GenresResponse } from '@/types/api';
 import db from '@/db';
 import { genres } from '@/db/schema';

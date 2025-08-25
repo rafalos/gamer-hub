@@ -1,5 +1,5 @@
 import { getGameByRawgId } from '@/db/queries';
-import { fetchGame } from '@/lib/fetchers';
+import { fetchGame } from '@/lib/server/fetchers';
 
 export async function GET(
   request: Request,

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import RegisterForm from './RegisterForm';
 import { authClient } from '@/lib/auth-client';
 import { Button } from '@/components/ui/button';

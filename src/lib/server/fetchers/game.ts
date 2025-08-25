@@ -1,4 +1,4 @@
-import { getById } from '@/lib/gameApi';
+import { getById } from '@/lib/server/rawg-api';
 import db from '@/db';
 import { games, gamesToGenres, gamesToPlatforms } from '@/db/schema';
 
