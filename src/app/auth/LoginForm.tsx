@@ -16,12 +16,14 @@ import { useForm } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
 import { authClient } from '@/lib/auth-client';
 import { useRouter } from 'next/navigation';
+import ButtonLoader from '@/components/ButtonLoader';
 
 type Props = {
   email: string;
+  onError: (error: string) => void;
 };
 
-const LoginForm = ({ email }: Props) => {
+const LoginForm = ({ email, onError }: Props) => {
   const router = useRouter();
 
   const form = useForm<LoginUserType>({
@@ -42,6 +44,9 @@ const LoginForm = ({ email }: Props) => {
       {
         onSuccess: () => {
           router.push('/home');
+        },
+        onError: (ctx) => {
+          onError(ctx.error.message);
         },
       }
     );
@@ -81,8 +86,12 @@ const LoginForm = ({ email }: Props) => {
             )}
           />
 
-          <Button type='submit' className='cursor-pointer'>
-            Login
+          <Button
+            type='submit'
+            className='cursor-pointer'
+            disabled={form.formState.isSubmitting}
+          >
+            {form.formState.isSubmitting ? <ButtonLoader /> : 'Login'}
           </Button>
         </form>
       </Form>

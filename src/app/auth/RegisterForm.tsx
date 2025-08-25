@@ -16,12 +16,14 @@ import { useForm } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
 import { authClient } from '@/lib/auth-client';
 import { useRouter } from 'next/navigation';
+import ButtonLoader from '@/components/ButtonLoader';
 
 type Props = {
   email: string;
+  onError: (error: string) => void;
 };
 
-const RegisterForm = ({ email }: Props) => {
+const RegisterForm = ({ email, onError }: Props) => {
   const router = useRouter();
 
   const form = useForm<RegisterUserType>({
@@ -37,13 +39,16 @@ const RegisterForm = ({ email }: Props) => {
   });
 
   const onSubmit = async (values: RegisterUserType) => {
-    const {} = await authClient.signUp.email(
+    await authClient.signUp.email(
       {
         ...values,
       },
       {
         onSuccess: () => {
           router.push('/home');
+        },
+        onError: (ctx) => {
+          onError(ctx.error.message);
         },
       }
     );
@@ -107,8 +112,12 @@ const RegisterForm = ({ email }: Props) => {
             </FormItem>
           )}
         />
-        <Button type='submit' className='cursor-pointer'>
-          Register
+        <Button
+          type='submit'
+          className='cursor-pointer'
+          disabled={form.formState.isSubmitting}
+        >
+          {form.formState.isSubmitting ? <ButtonLoader /> : 'Register'}
         </Button>
       </form>
     </Form>

@@ -1,7 +1,7 @@
 'use client';
 
 import axios, { AxiosError } from 'axios';
-import React from 'react';
+import React, { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Form,
@@ -15,15 +15,18 @@ import { Button } from '@/components/ui/button';
 import { useForm } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
 import z from 'zod';
+import ButtonLoader from '@/components/ButtonLoader';
 
 type Props = {
   onCheckEmail: (emailExists: boolean) => void;
-  onSetStatus: (message: string) => void;
+  onNotification: (message: string) => void;
   onSetEmail: (email: string) => void;
   error: boolean;
 };
 
-const BaseForm = ({ onCheckEmail, onSetStatus, onSetEmail, error }: Props) => {
+const BaseForm = ({ onCheckEmail, onNotification, onSetEmail, error }: Props) => {
+  const [loading, setLoading] = useState(false);
+
   const form = useForm<{
     email: string;
   }>({
@@ -41,6 +44,8 @@ const BaseForm = ({ onCheckEmail, onSetStatus, onSetEmail, error }: Props) => {
     if (error) return;
 
     try {
+      setLoading(true);
+
       await axios.post('/api/auth/verify_user', {
         email,
       });
@@ -52,12 +57,13 @@ const BaseForm = ({ onCheckEmail, onSetStatus, onSetEmail, error }: Props) => {
           return onCheckEmail(false);
         }
         if (error.status === 403) {
-          onSetStatus(
+          onNotification(
             error.response?.data.message ?? 'User has used github provider'
           );
         }
       }
     } finally {
+      setLoading(false);
       onSetEmail(email);
     }
   };
@@ -83,8 +89,8 @@ const BaseForm = ({ onCheckEmail, onSetStatus, onSetEmail, error }: Props) => {
             )}
           />
 
-          <Button type='submit' className='cursor-pointer'>
-            Continue
+          <Button type='submit' className='cursor-pointer' disabled={loading}>
+            {loading ? <ButtonLoader /> : 'Continue'}
           </Button>
         </form>
       </Form>

@@ -13,6 +13,7 @@ import Notification from '@/components/Notification';
 const Auth = () => {
   const [emailExists, setEmailExists] = useState<boolean | null>(null);
   const [error, setError] = useState('');
+  const [notification, setNotification] = useState('');
   const [email, setEmail] = useState('');
 
   const getForm = (): ReactNode => {
@@ -20,14 +21,14 @@ const Auth = () => {
       return (
         <BaseForm
           onCheckEmail={setEmailExists}
-          onSetStatus={setError}
+          onNotification={setNotification}
           onSetEmail={setEmail}
           error={!!error}
         />
       );
-    if (emailExists) return <LoginForm email={email} />;
+    if (emailExists) return <LoginForm email={email} onError={setError} />;
 
-    return <RegisterForm email={email} />;
+    return <RegisterForm email={email} onError={setError} />;
   };
 
   return (
@@ -35,7 +36,8 @@ const Auth = () => {
       <div className='flex flex-col w-full md:max-w-[600px] mx-auto gap-4 p-4'>
         <Heading className='mb-8' />
         {getForm()}
-        {error && <Notification text={error} />}
+        {notification && <Notification text={notification} />}
+        {error && <Notification text={error} isError />}
         <Button
           type='button'
           variant='secondary'
