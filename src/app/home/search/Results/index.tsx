@@ -2,15 +2,14 @@ import GameItem from '@/components/GameItem';
 import ItemGrid from '@/components/ItemGrid';
 import Box from '@/components/Box';
 import React from 'react';
-import { Game } from '@/types/api';
-// import { getByName } from '@/lib/server/rawg-api';
+import { getByName } from '@/lib/server/rawg-api';
 
 type Props = {
   query: string;
 };
 
 const Results = async ({ query }: Props) => {
-  const games = [] as Game[]
+  const games = await getByName(query)
 
   return (
     <Box title={`Search results for query ${query}`}>
