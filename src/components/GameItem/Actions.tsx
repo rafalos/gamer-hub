@@ -10,7 +10,11 @@ type Props = {
 
 const Actions = ({ id }: Props) => {
   const handleAddToLibrary = async () => {
-    await axios.get(`http://localhost:3000/api/games/${id.toString()}`);
+    const response = await axios.get(
+      `http://localhost:3000/api/games/${id.toString()}`
+    );
+
+    console.log(response.data);
   };
 
   return (
