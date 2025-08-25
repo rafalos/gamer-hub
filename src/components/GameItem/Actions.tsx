@@ -11,7 +11,7 @@ type Props = {
 const Actions = ({ id }: Props) => {
   const handleAddToLibrary = async () => {
     const response = await axios.get(
-      `${process.env.ROOT_URL}/api/games/${id.toString()}`
+      `${process.env.NEXT_PUBLIC_ROOT_URL}/api/games/${id.toString()}`
     );
 
     console.log(response.data);

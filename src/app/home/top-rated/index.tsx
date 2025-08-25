@@ -7,7 +7,7 @@ import React from 'react';
 
 const TopRated = async () => {
   const popularGames = await axios.get<Game[]>(
-    `${process.env.ROOT_URL}/api/games/popular`
+    `${process.env.NEXT_PUBLIC_ROOT_URL}/api/games/popular`
   );
 
   const games = popularGames.data.splice(1, 6);
