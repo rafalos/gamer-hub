@@ -7,10 +7,12 @@ import {
   CardFooter,
   CardHeader,
 } from '@/components/ui/card';
-import Actions from './Actions';
+import Cta from './Cta';
+import Link from 'next/link';
 
 type Props = {
   game: Game;
+  isInLibrary: boolean
 };
 
 const platformColors: Record<string, string> = {
@@ -20,7 +22,7 @@ const platformColors: Record<string, string> = {
   nintendo: 'bg-nintendo',
 };
 
-const GameItem = ({ game }: Props) => {
+const GameItem = ({ game, isInLibrary }: Props) => {
   const { name, platforms, background_image, id } = game;
 
   const availablePlatforms = platforms.map(({ platform }) =>
@@ -39,7 +41,8 @@ const GameItem = ({ game }: Props) => {
     <Card className='p-0 gap-0 w-full hover:cursor-pointer transition-transform justify-between'>
       <CardHeader className='grid-cols-[repeat(auto-fit,minmax(0,30px))] justify-items-center text-accent p-2 text-center'>
         {uniquePlatforms.map((platform) => (
-          <div
+          <Link
+            href={`/platform/${platform}`}
             key={platform}
             className={`${platformColors[platform]} 0 w-full flex justify-center rounded-md`}
           >
@@ -50,7 +53,7 @@ const GameItem = ({ game }: Props) => {
               width={20}
               height={20}
             />
-          </div>
+          </Link>
         ))}
       </CardHeader>
       <CardContent className='relative h-[150px] group'>
@@ -67,7 +70,7 @@ const GameItem = ({ game }: Props) => {
       <CardFooter className='flex items-center justify-center flex-col text-black p-4 text-sm font-bold'>
         {name}
       </CardFooter>
-      <Actions id={id}/>
+      <Cta id={id} isInLibrary={isInLibrary}/>
     </Card>
   );
 };

@@ -15,6 +15,13 @@
       "when": 1756032843642,
       "tag": "0001_salty_scrambler",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1756214063923,
+      "tag": "0002_daffy_fallen_one",
+      "breakpoints": true
     }
   ]
 }

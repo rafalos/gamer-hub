@@ -1,6 +1,6 @@
-import { eq } from 'drizzle-orm';
+import { count, eq } from 'drizzle-orm';
 import db from '.';
-import { account, games, genres, user } from './schema';
+import { account, games, gamesToUsers, genres, user } from './schema';
 
 export const checkUserEmail = async (
   email: string
@@ -29,10 +29,28 @@ export const getGenres = async () => {
 };
 
 export const getGameByRawgId = async (id: string) => {
-  const foundGames = await db
-    .select()
-    .from(games)
-    .where(eq(games.rawg_id, id));
+  const foundGames = await db.select().from(games).where(eq(games.rawg_id, id));
 
   return foundGames[0];
+};
+
+export const getLibraryCountForUser = async (userId: string) => {
+  const gamesCount = await db
+    .select({
+      count: count(),
+    })
+    .from(gamesToUsers)
+    .where(eq(gamesToUsers.user_id, userId));
+
+  return gamesCount[0].count;
+};
+
+export const getUserLibrary = async (userId: string) => {
+  const libraryGames = await db
+    .select()
+    .from(games)
+    .innerJoin(gamesToUsers, eq(games.id, gamesToUsers.game_id))
+    .where(eq(gamesToUsers.user_id, userId));
+
+  return libraryGames.map(({ games }) => games);
 };

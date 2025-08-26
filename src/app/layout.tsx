@@ -14,15 +14,9 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: 'Gamers HUB',
-  description: 'Explore thousands of games. Track completion and store in library.',
+  description:
+    'Explore thousands of games. Track completion and store in library.',
 };
-
-const Artifacts = () => (
-  <>
-    <div className='w-[50%] h-[70%] bg-primary/8 rounded-full absolute right-0 blur-3xl z-[-1]'></div>
-    <div className='w-[50%] h-[70%] bg-black/8 rounded-full absolute left-0 bottom-0 blur-3xl z-[-1]'></div>
-  </>
-);
 
 export default function RootLayout({
   children,
@@ -34,8 +28,6 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased h-dvh`}
       >
-        <Artifacts />
-        {/* <LucideGamepad className='stroke-primary/3 w-[100%] h-[100%] left-[-24%] top-[20%] absolute overflow-hidden' /> */}
         {children}
       </body>
     </html>

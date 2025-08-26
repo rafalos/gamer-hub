@@ -9,13 +9,19 @@ type Props = {
 };
 
 const Results = async ({ query }: Props) => {
-  const games = await getByName(query)
+  const games = await getByName(query);
 
   return (
     <Box title={`Search results for query ${query}`}>
       <ItemGrid
         data={games}
-        render={(game, index) => <GameItem game={game} key={index} />}
+        render={(game, index, library) => {
+          const isInLibrary = library.some(
+            (libGame) => libGame.rawg_id === game.id.toString()
+          );
+
+          return <GameItem game={game} key={index} isInLibrary={isInLibrary} />;
+        }}
       />
     </Box>
   );

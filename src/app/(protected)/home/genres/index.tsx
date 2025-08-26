@@ -4,7 +4,6 @@ import React from 'react';
 const Genres = async () => {
   const genres = await getGenres();
 
-  console.log(genres);
   return (
     <div
       className='flex lg:flex-wrap gap-4 overflow-auto mb-4 scrollbar-hidden after:bg-white 

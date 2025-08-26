@@ -1,6 +1,6 @@
 'use client';
 
-import axios, { AxiosError } from 'axios';
+import axios from '@/lib/axios';
 import React, { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -16,6 +16,7 @@ import { useForm } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
 import z from 'zod';
 import ButtonLoader from '@/components/ButtonLoader';
+import { AxiosError } from 'axios';
 
 type Props = {
   onCheckEmail: (emailExists: boolean) => void;
@@ -24,7 +25,12 @@ type Props = {
   error: boolean;
 };
 
-const BaseForm = ({ onCheckEmail, onNotification, onSetEmail, error }: Props) => {
+const BaseForm = ({
+  onCheckEmail,
+  onNotification,
+  onSetEmail,
+  error,
+}: Props) => {
   const [loading, setLoading] = useState(false);
 
   const form = useForm<{

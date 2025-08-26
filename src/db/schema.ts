@@ -6,6 +6,7 @@ import {
   boolean,
   integer,
   serial,
+  primaryKey,
 } from 'drizzle-orm/pg-core';
 
 export const user = pgTable('user', {
@@ -99,12 +100,13 @@ export const games = pgTable('games', {
   metacritic_score: integer('metacritic_score'),
   released: text('released'),
   background_image: text('background_image'),
-  rawg_id: text('rawg_id').unique()
+  rawg_id: text('rawg_id').unique(),
 });
 
 export const gamesRelations = relations(games, ({ many }) => ({
   gamesToPlatforms: many(gamesToPlatforms),
   gamesToGenres: many(gamesToGenres),
+  gamesToUsers: many(gamesToUsers),
 }));
 
 export const gamesToPlatforms = pgTable('games_to_platforms', {
@@ -115,6 +117,38 @@ export const gamesToPlatforms = pgTable('games_to_platforms', {
     .notNull()
     .references(() => platforms.id),
 });
+
+export const gamesToUsers = pgTable(
+  'games_to_users',
+  {
+    game_id: integer('game_id')
+      .notNull()
+      .references(() => games.id),
+    user_id: text('user_id')
+      .notNull()
+      .references(() => user.id),
+  },
+  (table) => [
+    primaryKey({
+      columns: [table.game_id, table.user_id],
+    }),
+  ]
+);
+
+export const gamesToUsersRelations = relations(gamesToUsers, ({ one }) => ({
+  game: one(games, {
+    fields: [gamesToUsers.game_id],
+    references: [games.id],
+  }),
+  user: one(user, {
+    fields: [gamesToUsers.user_id],
+    references: [user.id],
+  }),
+}));
+
+export const userRelations = relations(user, ({ many }) => ({
+  gamesToUsers: many(gamesToUsers),
+}));
 
 export const gamesToPlatformsRelations = relations(
   gamesToPlatforms,
