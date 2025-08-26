@@ -29,7 +29,13 @@ const Platform = async ({
     <Box title={`Top rated ${platform} games`}>
       <ItemGrid
         data={games}
-        render={(game, index) => <GameItem game={game} key={index} />}
+        render={(game, index, library) => {
+          const isInLibrary = library.some(
+            (libGame) => libGame.rawg_id === game.id.toString()
+          );
+
+          return <GameItem game={game} key={index} isInLibrary={isInLibrary} />;
+        }}
       />
     </Box>
   );
