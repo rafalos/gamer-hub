@@ -7,6 +7,7 @@ import {
   integer,
   serial,
   primaryKey,
+  uniqueIndex,
 } from 'drizzle-orm/pg-core';
 
 export const user = pgTable('user', {
@@ -93,15 +94,19 @@ export const platformsRelations = relations(platforms, ({ many }) => ({
   gamesToPlatforms: many(gamesToPlatforms),
 }));
 
-export const games = pgTable('games', {
-  id: serial('id').primaryKey().unique(),
-  name: text('name').notNull(),
-  description: text('description'),
-  metacritic_score: integer('metacritic_score'),
-  released: text('released'),
-  background_image: text('background_image'),
-  rawg_id: text('rawg_id').unique(),
-});
+export const games = pgTable(
+  'games',
+  {
+    id: serial('id').primaryKey().unique(),
+    name: text('name').notNull(),
+    description: text('description'),
+    metacritic_score: integer('metacritic_score'),
+    released: text('released'),
+    background_image: text('background_image'),
+    rawg_id: text('rawg_id').unique(),
+  },
+  (table) => [uniqueIndex('rawg_id_idx').on(table.rawg_id)]
+);
 
 export const gamesRelations = relations(games, ({ many }) => ({
   gamesToPlatforms: many(gamesToPlatforms),
