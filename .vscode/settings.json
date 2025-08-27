@@ -1,0 +1,6 @@
+{
+  "typescript.tsserver.maxTsServerMemory": 4096,
+  "typescript.tsserver.log": "off",
+  "editor.quickSuggestionsDelay": 50,
+  "editor.suggest.snippetsPreventQuickSuggestions": false
+}

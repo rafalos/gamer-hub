@@ -20,7 +20,7 @@ const Actions = ({ id, isInLibrary }: Props) => {
           isInLibrary ? 'bg-primary/50 cursor-not-allowed' : 'bg-primary'
         } w-full rounded-bl-md flex items-center justify-center py-1 border-r hover:brightness-110`}
         onClick={async () => {
-          if (isInLibrary) return alert('Game is already in library');
+          // if (isInLibrary) return alert('Game is already in library');
 
           const result = await addToLibrary(id.toString());
           if (result) {

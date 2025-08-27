@@ -2,9 +2,8 @@ import { getById } from '@/lib/server/rawg-api';
 import db from '@/db';
 import { games, gamesToGenres, gamesToPlatforms } from '@/db/schema';
 
-export const fetchGame = async (gameId: string) => {
+export const fetchGame = async (rawg_id: string) => {
   const {
-    id: rawg_id,
     name,
     description,
     metacritic,
@@ -12,14 +11,15 @@ export const fetchGame = async (gameId: string) => {
     background_image,
     platforms,
     genres,
-  } = await getById(gameId);
+  } = await getById(rawg_id);
 
   const gamesToPlatformsInsert = platforms.map(({ platform }) => ({
-    game_id: rawg_id.toString(),
+    game_id: rawg_id,
     platform_id: platform.id.toString(),
   }));
+
   const gamesToGenresInsert = genres.map(({ id: genreId }) => ({
-    game_id: rawg_id.toString(),
+    game_id: rawg_id,
     genre_id: genreId.toString(),
   }));
 
@@ -27,14 +27,23 @@ export const fetchGame = async (gameId: string) => {
     const [game] = await tx
       .insert(games)
       .values({
-        rawg_id: rawg_id.toString(),
+        rawg_id,
         name,
         description,
         metacritic_score: metacritic,
         released,
         background_image,
       })
-      .onConflictDoNothing()
+      .onConflictDoUpdate({
+        target: games.rawg_id,
+        set: {
+          name,
+          description,
+          metacritic_score: metacritic,
+          released,
+          background_image,
+        },
+      })
       .returning();
 
     await tx
@@ -47,9 +56,9 @@ export const fetchGame = async (gameId: string) => {
       .values(gamesToGenresInsert)
       .onConflictDoNothing();
 
-      return game
+    return game;
   });
 
   console.log(`${rawg_id} inserted to DB`);
-  return result
+  return result;
 };

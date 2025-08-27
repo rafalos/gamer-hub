@@ -38,9 +38,6 @@ export const getPopular = async (platform?: string) => {
     return JSON.parse(cachedResults) as Game[];
   }
 
-  const url = `${GAMES_URL}&ordering=rating${platform ? `&platforms=${platform}` : ''}`
-
-  console.log(url, 'from fetcher')
   const response = await axios.get<GamesResponse>(
     `${GAMES_URL}&ordering="rating"${platform ? `&platforms=${platform}` : ''}`
   );

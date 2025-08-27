@@ -12,7 +12,7 @@ import Link from 'next/link';
 
 type Props = {
   game: Game;
-  isInLibrary: boolean
+  isInLibrary: boolean;
 };
 
 const platformColors: Record<string, string> = {
@@ -70,7 +70,7 @@ const GameItem = ({ game, isInLibrary }: Props) => {
       <CardFooter className='flex items-center justify-center flex-col text-black p-4 text-sm font-bold'>
         {name}
       </CardFooter>
-      <Cta id={id} isInLibrary={isInLibrary}/>
+      <Cta id={id} isInLibrary={isInLibrary} />
     </Card>
   );
 };

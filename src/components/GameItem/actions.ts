@@ -2,9 +2,9 @@
 
 import db from '@/db';
 import { getGameByRawgId } from '@/db/queries';
-import { gamesToUsers } from '@/db/schema';
+import { games, gamesToUsers } from '@/db/schema';
 import { auth } from '@/lib/auth';
-import { fetchGame } from '@/lib/server/fetchers';
+import { gameQueue } from '@/lib/server/queue';
 import { revalidatePath } from 'next/cache';
 import { headers } from 'next/headers';
 
@@ -14,15 +14,30 @@ export const addToLibrary = async (rawg_id: string) => {
   });
   if (!session) return;
 
-  let game: Awaited<ReturnType<typeof getGameByRawgId>>;
-  game = await getGameByRawgId(rawg_id);
+  let gameId: number;
+  gameId = (await getGameByRawgId(rawg_id))?.id;
 
-  if (!game) game = await fetchGame(rawg_id);
+  if (!gameId) {
+    const [{ id }] = await db
+      .insert(games)
+      .values({
+        rawg_id,
+        name: '',
+      })
+      .returning({
+        id: games.id,
+      });
+    gameId = id;
+  }
+
+  await gameQueue.add('fetch_game', {
+    rawg_id,
+  });
 
   const result = await db
     .insert(gamesToUsers)
     .values({
-      game_id: game.id,
+      game_id: gameId,
       user_id: session.user.id,
     })
     .onConflictDoNothing();
