@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX "rawg_id_idx" ON "games" USING btree ("rawg_id");
