@@ -1,6 +1,7 @@
 import { getById } from '@/lib/server/rawg-api';
 import db from '@/db';
 import { games, gamesToGenres, gamesToPlatforms } from '@/db/schema';
+import axios from 'axios';
 
 export const fetchGame = async (rawg_id: string) => {
   const {
@@ -12,6 +13,9 @@ export const fetchGame = async (rawg_id: string) => {
     platforms,
     genres,
   } = await getById(rawg_id);
+
+  //wakeup lazy worker
+  await axios.get(`${process.env.WORKER_URL}/keep-worker-alive`);
 
   const gamesToPlatformsInsert = platforms.map(({ platform }) => ({
     game_id: rawg_id,

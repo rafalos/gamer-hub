@@ -28,6 +28,7 @@ worker.on('failed', (job, err) => {
 });
 
 app.get('/keep-worker-alive', (req, res) => {
+  console.log(`[${new Date().toISOString()}] Worker kept alive`);
   res.send('kept alive');
 });
 
