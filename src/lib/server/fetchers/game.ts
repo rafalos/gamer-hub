@@ -15,7 +15,13 @@ export const fetchGame = async (rawg_id: string) => {
   } = await getById(rawg_id);
 
   //wakeup lazy worker
-  await axios.get(`${process.env.WORKER_URL}/keep-worker-alive`);
+  try {
+
+    await axios.get(`${process.env.WORKER_URL}/keep-worker-alive`);
+  }catch(error) {
+    console.log(error)
+    console.log(process.env.WORKER_URL)
+  }
 
   const gamesToPlatformsInsert = platforms.map(({ platform }) => ({
     game_id: rawg_id,
