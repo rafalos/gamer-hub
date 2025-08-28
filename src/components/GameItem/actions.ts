@@ -5,6 +5,7 @@ import { getGameByRawgId } from '@/db/queries';
 import { games, gamesToUsers } from '@/db/schema';
 import { auth } from '@/lib/auth';
 import { gameQueue } from '@/lib/server/queue';
+import axios from 'axios';
 import { revalidatePath } from 'next/cache';
 import { headers } from 'next/headers';
 
@@ -30,6 +31,8 @@ export const addToLibrary = async (rawg_id: string) => {
     gameId = id;
   }
 
+  // wake up lazy worker in case of inactivity
+  axios.get(`${process.env.WORKER_URL}/keep-worker-alive`);
   await gameQueue.add('fetch_game', {
     rawg_id,
   });
