@@ -9,6 +9,11 @@ import {
 } from '@/components/ui/card';
 import Cta from './Cta';
 import Link from 'next/link';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 type Props = {
   game: Game;
@@ -23,7 +28,7 @@ const platformColors: Record<string, string> = {
 };
 
 const GameItem = ({ game, isInLibrary }: Props) => {
-  const { name, platforms, background_image, id } = game;
+  const { name, platforms, background_image, id, metacritic } = game;
 
   const availablePlatforms = platforms.map(({ platform }) =>
     platform.name.split(' ')[0].toLowerCase()
@@ -39,12 +44,12 @@ const GameItem = ({ game, isInLibrary }: Props) => {
 
   return (
     <Card className='p-0 gap-0 w-full hover:cursor-pointer transition-transform justify-between'>
-      <CardHeader className='grid-cols-[repeat(auto-fit,minmax(0,30px))] justify-items-center text-accent p-2 text-center'>
+      <CardHeader className='grid-cols-[repeat(auto-fit,minmax(0,30px))] justify-items-center text-accent p-2 text-center relative'>
         {uniquePlatforms.map((platform) => (
           <Link
             href={`/platform/${platform}`}
             key={platform}
-            className={`${platformColors[platform]} 0 w-full flex justify-center rounded-md`}
+            className={`${platformColors[platform]} w-full flex justify-center rounded-md`}
           >
             <Image
               className='m-1'
@@ -55,6 +60,16 @@ const GameItem = ({ game, isInLibrary }: Props) => {
             />
           </Link>
         ))}
+        {metacritic && (
+          <Tooltip>
+            <TooltipTrigger className='absolute right-1 top-1.5 bg-metacritic rounded-full py-1 px-2 font-bold cursor-pointer'>
+              {metacritic}
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Metacritic score</p>
+            </TooltipContent>
+          </Tooltip>
+        )}
       </CardHeader>
       <CardContent className='relative h-[150px] group'>
         <Image
