@@ -1,6 +1,7 @@
 {
-  "typescript.tsserver.maxTsServerMemory": 4096,
-  "typescript.tsserver.log": "off",
-  "editor.quickSuggestionsDelay": 50,
-  "editor.suggest.snippetsPreventQuickSuggestions": false
+  "typescript.tsserver.tsdk": "node_modules/typescript/lib",
+  "typescript.tsserver.maxTsServerMemory": 8192,
+  "typescript.tsserver.experimental.enableProjectDiagnostics": false,
+  "typescript.suggest.completeFunctionCalls": true,
+  "typescript.preferences.importModuleSpecifier": "non-relative"
 }

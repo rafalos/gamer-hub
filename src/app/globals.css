@@ -112,6 +112,19 @@
   --sidebar-ring: oklch(0.488 0.243 264.376);
 }
 
+.nintendo {
+  --primary: var(--color-nintendo);
+}
+.playstation {
+  --primary: var(--color-playstation);
+}
+.pc {
+  --primary: var(--color-pc);
+}
+.xbox {
+  --primary: var(--color-xbox);
+}
+
 @theme {
   --animate-wiggle: wiggle 5s ease-in-out infinite;
   --animate-spin-scale: spin-scale 1s linear 1;
@@ -120,6 +133,7 @@
   --color-xbox: #2ca243;
   --color-nintendo: #dd2020;
   --color-pc: #a5a2a2;
+  --color-metacritic: #66cc33;
 
   @keyframes wiggle {
     0%,
@@ -136,16 +150,16 @@
   }
 
   @keyframes scaleUp {
-  0% {
-    transform: scale(1)
-  }
-   20% {
-    transform: scale(1.6)
-   }
+    0% {
+      transform: scale(1);
+    }
+    20% {
+      transform: scale(1.6);
+    }
 
-   100% {
-    transform: scale(1)
-   }
+    100% {
+      transform: scale(1);
+    }
   }
 }
 
