@@ -5,11 +5,11 @@ const Counter = async () => {
   const charArray = gamesCount.toString().split('');
 
   return (
-    <div className='flex gap-2'>
+    <div className='inline-flex gap-2'>
       {charArray.map((char, index) => (
         <div
           key={`${char}_${index}`}
-          className='bg-white p-2 md:p-4 rounded-md text-lg md:text-2xl text-primary font-bold'
+          className='bg-white px-2 md:px-4 md:py-1 rounded-md text-lg md:text-2xl text-primary font-bold'
         >
           {char}
         </div>
