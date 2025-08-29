@@ -5,6 +5,7 @@ import React, { Suspense } from 'react';
 import MostPopular from './top-rated';
 import { ItemGridSkeleton } from '@/components/Skeletons';
 import Genres from './genres';
+import Hero from './hero';
 
 const Page = async () => {
   const session = await auth.api.getSession({
@@ -18,6 +19,7 @@ const Page = async () => {
   return (
     <div>
       <Genres />
+      <Hero />
       <Suspense fallback={<ItemGridSkeleton />}>
         <MostPopular />
       </Suspense>

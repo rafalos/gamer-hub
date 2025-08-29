@@ -39,7 +39,9 @@ export const getPopular = async (platform?: string) => {
   }
 
   const response = await axios.get<GamesResponse>(
-    `${GAMES_URL}&ordering="rating"${platform ? `&platforms=${platform}` : ''}`
+    `${GAMES_URL}&ordering="rating"${
+      platform ? `&platforms=${platform}&platforms_count=1` : ''
+    }`
   );
 
   const games = response.data.results;
@@ -53,4 +55,21 @@ export const getById = async (id: string) => {
   const game = response.data;
 
   return game;
+};
+
+export const getGamesCount = async () => {
+  const redisClient = await getRedisClient();
+  const CACHE_KEY = 'count';
+
+  const cachedResults = await redisClient.get(CACHE_KEY);
+
+  if (cachedResults) {
+    return JSON.parse(cachedResults);
+  }
+
+  const response = await axios.get<GamesResponse>(GAMES_URL);
+
+  const { count } = response.data;
+  await redisClient.setEx(CACHE_KEY, 60 * 60, count.toString());
+  return count;
 };
