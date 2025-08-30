@@ -12,7 +12,9 @@ const Heading = ({ className, isBrand = false }: Props) => {
         isBrand ? 'text-xl' : ' lg:text-8xl'
       } font-bold animate-in relative ${className}`}
     >
-      <span className='bg-primary text-white rounded-md p-2 inline'>Gamer</span>
+      <span className='bg-primary text-white rounded-md p-2 inline transition-colors'>
+        Gamer
+      </span>
       <span
         className={`relative ${isBrand ? 'top-1' : 'top-4'} ${
           isBrand ? 'lg:top-1' : 'lg:top-2'
