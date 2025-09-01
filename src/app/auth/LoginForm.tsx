@@ -15,7 +15,6 @@ import { Button } from '@/components/ui/button';
 import { useForm } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
 import { authClient } from '@/lib/auth-client';
-import { useRouter } from 'next/navigation';
 import ButtonLoader from '@/components/ButtonLoader';
 
 type Props = {
@@ -24,8 +23,6 @@ type Props = {
 };
 
 const LoginForm = ({ email, onError }: Props) => {
-  const router = useRouter();
-
   const form = useForm<LoginUserType>({
     resolver: zodResolver(LoginUser),
     mode: 'onBlur',
@@ -43,7 +40,7 @@ const LoginForm = ({ email, onError }: Props) => {
       },
       {
         onSuccess: () => {
-          router.push('/home');
+          window.location.href = '/home';
         },
         onError: (ctx) => {
           onError(ctx.error.message);

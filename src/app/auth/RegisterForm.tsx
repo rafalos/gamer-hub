@@ -45,7 +45,7 @@ const RegisterForm = ({ email, onError }: Props) => {
       },
       {
         onSuccess: () => {
-          router.push('/home');
+          window.location.href = '/home';
         },
         onError: (ctx) => {
           onError(ctx.error.message);

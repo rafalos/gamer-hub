@@ -1,7 +1,6 @@
 'use client';
 
 import { authClient } from '@/lib/auth-client';
-import { useRouter } from 'next/navigation';
 import React from 'react';
 import { Button } from '../ui/button';
 import { LogOutIcon } from 'lucide-react';
@@ -11,13 +10,11 @@ type Props = {
 };
 
 const Actions = ({ name }: Props) => {
-  const router = useRouter();
-
   const signOut = async () => {
     await authClient.signOut({
       fetchOptions: {
         onSuccess: () => {
-          router.push('/');
+          window.location.href = '/auth';
         },
       },
     });
