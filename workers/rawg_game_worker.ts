@@ -4,8 +4,18 @@ import { Worker } from 'bullmq';
 import { connection } from '@/lib/server/queue';
 import { fetchGame } from '@/lib/server/fetchers';
 import express from 'express';
+import cron from 'node-cron';
+import { createUpdateJobs } from 'workers/helpers';
 
 const app = express();
+
+cron.schedule('0 */10 * * *', async () => {
+  try {
+    await createUpdateJobs();
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 const worker = new Worker(
   'rawg_game_queue',

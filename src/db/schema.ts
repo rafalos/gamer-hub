@@ -101,7 +101,7 @@ export const games = pgTable('games', {
   metacritic_score: integer('metacritic_score'),
   released: text('released'),
   background_image: text('background_image'),
-  rawg_id: text('rawg_id').unique(),
+  rawg_id: text('rawg_id').unique().notNull(),
 });
 
 export const gamesRelations = relations(games, ({ many }) => ({

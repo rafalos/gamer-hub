@@ -54,3 +54,14 @@ export const getUserLibrary = async (userId: string) => {
 
   return libraryGames.map(({ games }) => games);
 };
+
+export const getEmptyGames = async () => {
+  const emptyGames = await db
+    .select({
+      rawg_id: games.rawg_id,
+    })
+    .from(games)
+    .where(eq(games.name, ''));
+
+  return emptyGames.map((record) => record.rawg_id);
+};
