@@ -9,16 +9,16 @@ import axios from 'axios';
 import { revalidatePath } from 'next/cache';
 import { headers } from 'next/headers';
 
-export const addToLibrary = async (rawg_id: string) => {
+export const addToLibraryAction = async (state: boolean, rawg_id: string) => {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
-  if (!session) return;
+  if (!session) return false;
 
   let gameId: number;
-  gameId = (await getGameByRawgId(rawg_id))?.id;
-
-  if (!gameId) {
+  const game = await getGameByRawgId(rawg_id);
+  
+  if (!game) {
     const [{ id }] = await db
       .insert(games)
       .values({
@@ -29,6 +29,8 @@ export const addToLibrary = async (rawg_id: string) => {
         id: games.id,
       });
     gameId = id;
+  } else {
+    gameId = game.id;
   }
 
   // wake up lazy worker in case of inactivity

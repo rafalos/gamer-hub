@@ -43,7 +43,7 @@ const GameItem = ({ game, isInLibrary }: Props) => {
   );
 
   return (
-    <Card className='p-0 gap-0 w-full hover:cursor-pointer transition-transform justify-between'>
+    <Card className='p-0 gap-0 w-full hover:cursor-pointer transition-transform justify-between rounded-none'>
       <CardHeader className='grid-cols-[repeat(auto-fit,minmax(0,30px))] justify-items-center text-accent p-2 text-center relative'>
         {uniquePlatforms.map((platform) => (
           <Link
@@ -71,20 +71,22 @@ const GameItem = ({ game, isInLibrary }: Props) => {
           </Tooltip>
         )}
       </CardHeader>
-      <CardContent className='relative h-[150px] group'>
-        <Image
-          sizes='400px'
-          className='object-cover'
-          src={`${background_image ?? '/placeholder.svg'}`}
-          alt={name}
-          fill
-          placeholder='blur'
-          blurDataURL='/placeholder.svg'
-        />
-      </CardContent>
-      <CardFooter className='flex items-center justify-center flex-col text-black p-4 text-sm font-bold'>
-        {name}
-      </CardFooter>
+      <Link href={`/games/${id}`}>
+        <CardContent className='relative h-[150px] group'>
+          <Image
+            sizes='400px'
+            className='object-cover'
+            src={`${background_image ?? '/placeholder.svg'}`}
+            alt={name}
+            fill
+            placeholder='blur'
+            blurDataURL='/placeholder.svg'
+          />
+        </CardContent>
+        <CardFooter className='flex items-center justify-center flex-col text-black p-4 h-16 text-sm font-bold'>
+          {name}
+        </CardFooter>
+      </Link>
       <Cta id={id} isInLibrary={isInLibrary} />
     </Card>
   );

@@ -1,6 +1,15 @@
-import { count, eq } from 'drizzle-orm';
+import { count, eq, sql } from 'drizzle-orm';
 import db from '.';
-import { account, games, gamesToUsers, genres, user } from './schema';
+import {
+  account,
+  games,
+  gamesToGenres,
+  gamesToPlatforms,
+  gamesToUsers,
+  genres,
+  platforms,
+  user,
+} from './schema';
 
 export const checkUserEmail = async (
   email: string
@@ -31,7 +40,40 @@ export const getGenres = async () => {
 export const getGameByRawgId = async (id: string) => {
   const foundGames = await db.select().from(games).where(eq(games.rawg_id, id));
 
-  return foundGames[0];
+  return foundGames.length ? foundGames[0] : null;
+};
+
+export const getGameWithDetailsByRawgId = async (id: string) => {
+  const foundGame = await db
+    .select({
+      id: games.id,
+      name: games.name,
+      description: games.description,
+      metacritic_score: games.metacritic_score,
+      released: games.released,
+      background_image: games.background_image,
+      platforms: sql<string[]>`
+        ARRAY(
+          SELECT DISTINCT p.name
+          FROM ${platforms} p
+          JOIN ${gamesToPlatforms} gp ON gp.platform_id = p.id
+          WHERE gp.game_id = ${games.rawg_id}
+        )
+      `,
+      genres: sql<string[]>`
+        ARRAY(
+          SELECT DISTINCT g.name
+          FROM ${genres} g
+          JOIN ${gamesToGenres} gg ON gg.genre_id = g.id
+          WHERE gg.game_id = ${games.rawg_id}
+        )
+      `,
+    })
+    .from(games)
+    .where(eq(games.rawg_id, id))
+    .limit(1);
+
+  return foundGame[0];
 };
 
 export const getLibraryCountForUser = async (userId: string) => {

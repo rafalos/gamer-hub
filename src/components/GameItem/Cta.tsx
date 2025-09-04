@@ -1,41 +1,68 @@
 'use client';
 
-import { LibrarySquare, LucideStar } from 'lucide-react';
-import React from 'react';
-import { addToLibrary } from './actions';
+import { LoaderCircle, LucideHeart, PlusCircle } from 'lucide-react';
+import React, { startTransition, useActionState, useEffect } from 'react';
+import { addToLibraryAction } from './actions';
 import { useFooterStore } from '@/store/footer.store.';
+import { Button } from '@/components/ui/button';
 
 type Props = {
   id: number;
   isInLibrary: boolean;
 };
 
-const Actions = ({ id, isInLibrary }: Props) => {
+const Cta = ({ id, isInLibrary }: Props) => {
   const increaseLibrary = useFooterStore((state) => state.increaseLibraryCount);
+  const [addedSuccesfully, action, pending] = useActionState(
+    addToLibraryAction,
+    false
+  );
+
+  useEffect(() => {
+    if (addedSuccesfully) increaseLibrary();
+  }, [addedSuccesfully, increaseLibrary]);
 
   return (
-    <div className='flex w-full'>
-      <div
-        className={`text-accent ${
-          isInLibrary ? 'bg-primary/50 cursor-not-allowed' : 'bg-primary'
-        } w-full rounded-bl-md flex items-center justify-center py-1 border-r hover:brightness-110`}
-        onClick={async () => {
-          // if (isInLibrary) return alert('Game is already in library');
-
-          const result = await addToLibrary(id.toString());
-          if (result) {
-            increaseLibrary();
-          }
+    <div className='flex divide-x'>
+      <Button
+        variant='ghost'
+        disabled={isInLibrary}
+        className=' flex-1 cursor-pointer rounded-none'
+        onClick={() => {
+          if (isInLibrary) return;
+          startTransition(() => {
+            action(id.toString());
+          });
         }}
       >
-        <LibrarySquare className='h-6' />
-      </div>
+        {pending ? (
+          <span>
+            <LoaderCircle className='w-4 animate-spin' />
+          </span>
+        ) : (
+          <span className='text-sm flex gap-2 items-center'>
+            {isInLibrary ? (
+              'In library'
+            ) : (
+              <>
+                <PlusCircle className='w-4' />
+                library
+              </>
+            )}
+          </span>
+        )}
+      </Button>
 
-      <div className='text-accent bg-primary w-full rounded-br-md flex items-center justify-center hover:brightness-110'>
-        <LucideStar className='h-6' />
-      </div>
+      <Button variant='ghost' className='flex-1 cursor-pointer'>
+        <LucideHeart
+          fill={isInLibrary ? 'black' : 'white'}
+          stroke={isInLibrary ? 'white' : 'black'}
+          className='w-4'
+        />
+        like
+      </Button>
     </div>
   );
 };
 
-export default Actions;
+export default Cta;

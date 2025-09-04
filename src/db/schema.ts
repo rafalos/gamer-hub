@@ -7,7 +7,6 @@ import {
   integer,
   serial,
   primaryKey,
-  uniqueIndex,
 } from 'drizzle-orm/pg-core';
 
 export const user = pgTable('user', {

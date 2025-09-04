@@ -51,10 +51,12 @@ export const fetchGame = async (rawg_id: string) => {
       .values(gamesToPlatformsInsert)
       .onConflictDoNothing();
 
-    await tx
-      .insert(gamesToGenres)
-      .values(gamesToGenresInsert)
-      .onConflictDoNothing();
+    if (gamesToGenresInsert.length) {
+      await tx
+        .insert(gamesToGenres)
+        .values(gamesToGenresInsert)
+        .onConflictDoNothing();
+    }
 
     return game;
   });
