@@ -1,4 +1,4 @@
-import { mockRawgGame } from '@/__mocks__/game';
+import { mockRawgGame } from '__mocks__/game';
 import Cta from '@/components/GameItem/Cta';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, test, vi } from 'vitest';

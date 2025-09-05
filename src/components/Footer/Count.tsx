@@ -1,6 +1,6 @@
 'use client';
 
-import { useFooterStore } from '@/store/footer.store.';
+import { useFooterStore } from '@/store/footer.store';
 import { LibrarySquare } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 
@@ -13,6 +13,7 @@ const Count = ({ initialCount }: Props) => {
   const [animating, setAnimating] = useState(false);
 
   useEffect(() => {
+    if(localCount == 0) return
     setAnimating(true);
 
     const timer = setTimeout(() => {
@@ -26,7 +27,7 @@ const Count = ({ initialCount }: Props) => {
     <div
       className={`text-md font-bold border-primary text-white bg-primary py-2 px-4 rounded-md`}
     >
-      <div className={`flex  gap-4 ${animating ? 'animate-scale-up' : ''}`}>
+      <div className={`flex gap-4 ${animating ? 'animate-scale-up' : ''}`}>
         <LibrarySquare />
         {initialCount}
       </div>

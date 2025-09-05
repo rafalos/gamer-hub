@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Input } from '../ui/input';
 import { SearchIcon } from 'lucide-react';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 const Search = () => {
   const [query, setQuery] = useState('');
   const router = useRouter();
@@ -18,6 +18,7 @@ const Search = () => {
     <div className='w-full max-w-[800px] relative'>
       <SearchIcon className='absolute right-4 top-3' />
       <Input
+        type='search'
         onKeyDown={({ code }) => {
           if (code === 'Enter') {
             handleSearch();

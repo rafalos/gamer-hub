@@ -3,7 +3,7 @@
 import { LoaderCircle, LucideHeart, PlusCircle } from 'lucide-react';
 import React, { startTransition, useActionState, useEffect } from 'react';
 import { addToLibraryAction } from './actions';
-import { useFooterStore } from '@/store/footer.store.';
+import { useFooterStore } from '@/store/footer.store';
 import { Button } from '@/components/ui/button';
 
 type Props = {

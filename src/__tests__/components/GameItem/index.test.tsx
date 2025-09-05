@@ -1,7 +1,7 @@
 import { test, expect, describe } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import GameItem from '@/components/GameItem';
-import { mockRawgGame } from '@/__mocks__/game';
+import { mockRawgGame } from '__mocks__/game';
 
 describe('<GameItem />', () => {
   test('Displays game name properly', () => {

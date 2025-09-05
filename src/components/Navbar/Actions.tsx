@@ -23,7 +23,7 @@ const Actions = ({ name }: Props) => {
   return (
     <div className='hidden lg:flex justify-center items-center gap-4'>
       <p>Welcome, {name}</p>
-      <Button onClick={signOut} variant='ghost' className='cursor-pointer'>
+      <Button onClick={signOut} variant='ghost' className='cursor-pointer' aria-label='logout'>
         <LogOutIcon />
       </Button>
     </div>

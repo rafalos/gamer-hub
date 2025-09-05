@@ -1,5 +1,5 @@
-import { mockedSession } from '@/__mocks__/auth';
-import { mockDbGame } from '@/__mocks__/game';
+import { mockedSession } from '__mocks__/auth';
+import { mockDbGame } from '__mocks__/game';
 import { addToLibraryAction } from '@/components/GameItem/actions';
 import { getGameByRawgId } from '@/db/queries';
 import { auth } from '@/lib/auth';

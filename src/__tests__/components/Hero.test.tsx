@@ -1,25 +1,13 @@
 import { test, vi, expect, describe, beforeEach } from 'vitest';
 import Hero from '@/components/Hero';
 import { fireEvent, render, screen } from '@testing-library/react';
+import { pushMock } from '__mocks__/next/navigation';
 
-const pushMock = vi.fn();
-
-vi.mock('next/navigation', () => ({
-  useRouter: () => ({
-    push: pushMock,
-    replace: vi.fn(),
-    refresh: vi.fn(),
-    back: vi.fn(),
-    forward: vi.fn(),
-    prefetch: vi.fn(),
-  }),
-  usePathname: () => '/',
-  useSearchParams: () => new URLSearchParams(),
-}));
+vi.mock('next/navigation');
 
 describe('<Hero />', () => {
   beforeEach(() => {
-    pushMock.mockReset();
+    pushMock.mockClear()
   });
   test('Renders properly', () => {
     render(<Hero />);
