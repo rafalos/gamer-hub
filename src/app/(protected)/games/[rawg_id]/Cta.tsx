@@ -6,10 +6,14 @@ const Cta = () => {
   return (
     <div className='flex gap-2'>
       <Button className='cursor-pointer'>
-        <HeartIcon fill='#FFFFFF' />i want this game
+        <HeartIcon fill='#FFFFFF' />
       </Button>
-      <Button className='cursor-pointer'><LibraryIcon  /> I have this game</Button>
-      <Button className='cursor-pointer'><CheckCheckIcon /> I have completed this game</Button>
+      <Button className='cursor-pointer'>
+        <LibraryIcon />
+      </Button>
+      <Button className='cursor-pointer'>
+        <CheckCheckIcon />
+      </Button>
     </div>
   );
 };
