@@ -19,7 +19,7 @@ const Game = async ({
   if (!game || !game.name) {
     await fetchGame(rawg_id);
 
-    return <Processor />;
+    return <Processor rawg_id={rawg_id} />;
   }
 
   const {
@@ -33,29 +33,35 @@ const Game = async ({
   } = game;
   return (
     <div className='flex gap-8 relative h-full flex-col md:flex-row'>
-      <div className='flex flex-col static md:sticky top-24 h-full gap-2 items-center md:items-start flex-1'>
+      <div className='flex flex-col static md:sticky top-24 h-full items-center md:items-start flex-1'>
+        <div className='w-full p-2 rounded-t-md border'>
+          <h1 className='text-lg'>{name}</h1>
+        </div>
         <div className='w-full h-48 relative'>
           <Image
             src={background_image ?? '/placeholder.svg'}
             fill
             alt={game.name}
-            className='object-cover rounded-md'
+            className='object-cover'
             blurDataURL='/placeholder.svg'
           />
         </div>
-        <p>Release date: {released}</p>
-        {metacritic_score && (
-          <p>
-            Metacritic score:{' '}
-            <span className='bg-metacritic text-white px-2 text-lg'>
-              {metacritic_score}
-            </span>
-          </p>
-        )}
         <Cta />
       </div>
       <div className='flex flex-col gap-4 flex-3'>
-        <h1 className='text-2xl'>{name}</h1>
+        <div>
+          <h2 className='font-bold'>Release date:</h2>
+          <p> {released}</p>
+        </div>
+
+        {metacritic_score && (
+          <div>
+            <h2 className='font-bold'>Metacritic score:</h2>
+            <span className='bg-metacritic text-white p-1 text-lg'>
+              {metacritic_score}
+            </span>
+          </div>
+        )}
         <div>
           <h2 className='font-bold'>Genres:</h2>
           <ul className='flex gap-2'>
