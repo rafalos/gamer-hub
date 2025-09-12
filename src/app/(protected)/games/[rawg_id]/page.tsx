@@ -1,6 +1,7 @@
 import Cta from '@/app/(protected)/games/[rawg_id]/Cta';
 import Processor from '@/app/(protected)/games/[rawg_id]/Processor';
-import { getGameWithDetailsByRawgId } from '@/db/queries';
+import Screenshots from '@/app/(protected)/games/[rawg_id]/Screenshots';
+import { getGameWithDetailsByRawgId, getScreenshotsOfGame } from '@/db/queries';
 import { fetchGame } from '@/lib/server/fetchers';
 import Image from 'next/image';
 import React from 'react';
@@ -21,6 +22,8 @@ const Game = async ({
 
     return <Processor rawg_id={rawg_id} />;
   }
+
+  const screenshots = await getScreenshotsOfGame(game.id);
 
   const {
     description,
@@ -94,6 +97,10 @@ const Game = async ({
               }}
             ></div>
           </div>
+        )}
+
+        {screenshots.length && (
+          <Screenshots images={screenshots} gameName={game.name} />
         )}
       </div>
     </div>

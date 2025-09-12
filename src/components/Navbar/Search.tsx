@@ -24,7 +24,7 @@ const Search = () => {
             handleSearch();
           }
         }}
-        className='w-full border-primary border-2 h-12 rounded-2xl'
+        className='w-full border h-12 rounded-2xl'
         placeholder='Search for games...'
         value={query}
         onChange={(event) => setQuery(event.target.value)}

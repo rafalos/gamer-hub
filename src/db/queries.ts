@@ -8,6 +8,7 @@ import {
   gamesToUsers,
   genres,
   platforms,
+  screenshots,
   user,
 } from './schema';
 
@@ -106,4 +107,13 @@ export const getEmptyGames = async () => {
     .where(eq(games.name, ''));
 
   return emptyGames.map((record) => record.rawg_id);
+};
+
+export const getScreenshotsOfGame = async (id: number) => {
+  const foundScreenshots = await db
+    .select()
+    .from(screenshots)
+    .where(eq(screenshots.game_id, id));
+
+  return foundScreenshots;
 };

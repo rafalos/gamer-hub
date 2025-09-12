@@ -17,7 +17,7 @@ const Cta = ({ id, isInLibrary }: Props) => {
     addToLibraryAction,
     false
   );
-
+  
   useEffect(() => {
     if (addedSuccesfully) increaseLibrary();
   }, [addedSuccesfully, increaseLibrary]);
@@ -59,7 +59,7 @@ const Cta = ({ id, isInLibrary }: Props) => {
           stroke={isInLibrary ? 'white' : 'black'}
           className='w-4'
         />
-        like
+        wishlist
       </Button>
     </div>
   );

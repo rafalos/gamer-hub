@@ -15,7 +15,7 @@ const variantMap: Record<Variant, string> = {
 const Artifacts = ({ variant = 'default' }: Props) => (
   <>
     <div
-      className={`w-[50%] h-[70%] ${variantMap[variant]} absolute left-0 blur-3xl z-[-1]`}
+      className={`w-[50%] h-[70%] ${variantMap[variant]} absolute left-0 blur-[600px] z-[-1]`}
     ></div>
     <div className='w-[50%] h-[70%] bg-white/20 absolute right-0 bottom-0 blur-3xl z-[-1]'></div>
   </>
