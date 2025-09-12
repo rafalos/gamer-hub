@@ -9,6 +9,15 @@
     "moduleResolution": "node"
   },
   "files": [],
+  "ts-node": {
+    "compilerOptions": {
+      "baseUrl": ".",
+      "paths": {
+        "@/*": ["src/*"]
+      },
+      "module": "commonjs"
+    }
+  },
   "references": [
     { "path": "./tsconfig.json" },
     { "path": "./workers/tsconfig.json" }
