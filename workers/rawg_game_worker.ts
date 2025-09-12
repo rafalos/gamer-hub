@@ -2,10 +2,11 @@ import 'dotenv/config';
 
 import { Worker } from 'bullmq';
 import { connection } from '@/lib/server/queue';
-import { fetchGame } from '@/lib/server/fetchers';
 import express from 'express';
 import cron from 'node-cron';
-import { createUpdateJobs } from 'workers/helpers';
+import { createUpdateJobs } from './helpers';
+import { handleJob } from './jobHandler';
+import { Game } from '@/types/db';
 
 const app = express();
 
@@ -17,12 +18,23 @@ cron.schedule('0 */10 * * *', async () => {
   }
 });
 
-const worker = new Worker(
+export type JobName = 'fetch_game' | 'fetch_screenshots';
+
+const worker = new Worker<
+  {
+    rawg_id: string;
+  },
+  Game | void,
+  JobName
+>(
   'rawg_game_queue',
   async (job) => {
-    const { rawg_id } = job.data;
-
-    await fetchGame(rawg_id);
+    try {
+      await handleJob(job);
+    } catch (error) {
+      console.log(error);
+      console.log('failed to process job');
+    }
   },
   {
     connection,

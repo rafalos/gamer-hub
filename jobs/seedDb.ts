@@ -1,8 +1,8 @@
 import 'dotenv/config';
 import { drizzle } from 'drizzle-orm/node-postgres';
 
-import { genres, platforms } from '../src/db/schema';
-import { fetchGenres, fetchPlatforms } from '../src/lib/server/fetchers';
+import { genres, platforms } from '@/db/schema';
+import { fetchGenres, fetchPlatforms } from '@/lib/server/fetchers';
 import { sql } from 'drizzle-orm';
 
 async function seed() {

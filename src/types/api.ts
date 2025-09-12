@@ -8,6 +8,15 @@ export interface RawgResponse<T> {
 export type GamesResponse = RawgResponse<Game>;
 export type PlatformResponse = RawgResponse<Platform>;
 export type GenresResponse = RawgResponse<Genre>;
+export type ScreenshotsResponse = RawgResponse<Screenshot>;
+
+export interface Screenshot {
+  id: number;
+  image: string;
+  width: number;
+  height: number;
+  is_deleted: boolean;
+}
 
 export interface Game {
   id: number;
@@ -30,7 +39,7 @@ export interface Game {
   updated: string;
   esrb_rating: EsrbRating | null;
   platforms: PlatformEntry[];
-  genres: Genre[]
+  genres: Genre[];
 }
 
 export interface Rating {

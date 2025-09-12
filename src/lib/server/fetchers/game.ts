@@ -1,8 +1,10 @@
 import { getById } from '@/lib/server/rawg-api';
 import db from '@/db';
 import { games, gamesToGenres, gamesToPlatforms } from '@/db/schema';
+import { Game } from '@/types/db';
+import { createFetchScreenshotsJob } from '@/lib/server/queue';
 
-export const fetchGame = async (rawg_id: string) => {
+export const fetchGame = async (rawg_id: string): Promise<Game> => {
   const {
     name,
     description,
@@ -58,6 +60,7 @@ export const fetchGame = async (rawg_id: string) => {
         .onConflictDoNothing();
     }
 
+    await createFetchScreenshotsJob(rawg_id)
     return game;
   });
 

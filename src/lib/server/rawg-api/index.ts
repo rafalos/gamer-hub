@@ -1,10 +1,8 @@
-'use server';
-
 import { GamesResponse } from '@/types/api';
-import axios from 'axios';
 import { getRedisClient } from '../redis';
-import { Game } from '@/types/api';
-import { GAMES_URL, PLATFORMS, getGameByIdUrl } from './helpers';
+import type { Game, ScreenshotsResponse } from '@/types/api';
+import { GAMES_URL, PLATFORMS, getGameByIdUrl, getScreenshotsUrl } from './helpers';
+import axios from 'axios';
 
 export const getByName = async (query: string) => {
   const redisClient = await getRedisClient();
@@ -73,3 +71,11 @@ export const getGamesCount = async () => {
   await redisClient.setEx(CACHE_KEY, 60 * 60, count.toString());
   return count;
 };
+
+export const getScreenshots = async (id: string) => {
+  const url = getScreenshotsUrl(id);
+
+  const response = await axios.get<ScreenshotsResponse>(url)
+
+  return response.data.results
+}

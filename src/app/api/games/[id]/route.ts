@@ -1,5 +1,4 @@
 import { getGameByRawgId } from '@/db/queries';
-import { fetchGame } from '@/lib/server/fetchers';
 
 export async function GET(
   request: Request,
@@ -11,7 +10,12 @@ export async function GET(
 
   if (game) return Response.json(game);
 
-  const result = await fetchGame(rawg_id);
-
-  return Response.json(result);
+  return Response.json(
+    {
+      message: 'Game with given ID was not found',
+    },
+    {
+      status: 404,
+    }
+  );
 }

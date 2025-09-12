@@ -7,6 +7,16 @@ export const connection: ConnectionOptions = {
   port: +process.env.REDIS_PORT!,
 };
 
-export const gameQueue = new Queue('rawg_game_queue', {
+export const gameQueue = new Queue<{ rawg_id: string }>('rawg_game_queue', {
   connection,
 });
+
+export const createUpdateGameJob = (rawg_id: string) =>
+  gameQueue.add('fetch_game', {
+    rawg_id,
+  });
+
+export const createFetchScreenshotsJob = (rawg_id: string) =>
+  gameQueue.add('fetch_screenshots', {
+    rawg_id,
+  });

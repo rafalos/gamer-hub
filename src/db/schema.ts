@@ -107,6 +107,24 @@ export const gamesRelations = relations(games, ({ many }) => ({
   gamesToPlatforms: many(gamesToPlatforms),
   gamesToGenres: many(gamesToGenres),
   gamesToUsers: many(gamesToUsers),
+  screenshots: many(screenshots),
+}));
+
+export const screenshots = pgTable('screenshots', {
+  id: serial('id').primaryKey().unique(),
+  url: text('url').notNull(),
+  width: integer('width'),
+  height: integer('height'),
+  game_id: integer('game_id')
+    .notNull()
+    .references(() => games.id),
+});
+
+export const screenshotsRelations = relations(screenshots, ({ one }) => ({
+  game: one(games, {
+    fields: [screenshots.game_id],
+    references: [games.id],
+  }),
 }));
 
 export const gamesToPlatforms = pgTable('games_to_platforms', {

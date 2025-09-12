@@ -11,6 +11,16 @@ export const mockDbGame: DBGame = {
   released: '2025-12-12'
 }
 
+export const mockDbGameWithoutName: DBGame = {
+  background_image: 'http://testimage.com',
+  description: 'test description',
+  id: 1,
+  metacritic_score: 80,
+  name: '',
+  rawg_id: '123',
+  released: '2025-12-12'
+}
+
 export const mockRawgGame: Game = {
   id: 13536,
   slug: 'portal',

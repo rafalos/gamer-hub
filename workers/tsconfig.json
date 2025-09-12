@@ -1,13 +1,4 @@
 {
   "extends": "../tsconfig.base.json",
-  "compilerOptions": {
-    "target": "ES2022",
-    "lib": ["es2022", "webworker"],
-    "module": "esnext",
-    "moduleResolution": "node",
-    "composite": true,
-    "isolatedModules": true,
-    "noEmit": true
-  },
   "include": ["**/*", "../src/**/*"],
 }
