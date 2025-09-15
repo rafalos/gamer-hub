@@ -4,23 +4,23 @@ import React from 'react';
 
 const Cta = () => {
   return (
-    <div className='flex gap-2 w-full'>
+    <div className='flex border divide-x w-full'>
       <Button
-        className='cursor-pointer flex-1 border flex flex-col py-8'
+        className='cursor-pointer flex-1 flex flex-col py-8'
         variant={'ghost'}
       >
         <p>like</p>
         <HeartIcon />
       </Button>
       <Button
-        className='cursor-pointer flex-1 border flex flex-col py-8'
+        className='cursor-pointer flex-1 flex flex-col py-8'
         variant={'ghost'}
       >
         <p>library</p>
         <PlusCircle />
       </Button>
       <Button
-        className='cursor-pointer flex-1 border flex flex-col py-8'
+        className='cursor-pointer flex-1 flex flex-col py-8'
         variant={'ghost'}
       >
         <p>completed</p>

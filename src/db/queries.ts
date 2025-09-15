@@ -10,6 +10,7 @@ import {
   platforms,
   screenshots,
   user,
+  wishlistedGames,
 } from './schema';
 
 export const checkUserEmail = async (
@@ -96,6 +97,16 @@ export const getUserLibrary = async (userId: string) => {
     .where(eq(gamesToUsers.user_id, userId));
 
   return libraryGames.map(({ games }) => games);
+};
+
+export const getUserWishlist = async (userId: string) => {
+  const wishlist = await db
+    .select()
+    .from(games)
+    .innerJoin(wishlistedGames, eq(games.rawg_id, wishlistedGames.game_id))
+    .where(eq(wishlistedGames.user_id, userId));
+
+  return wishlist.map(({ games }) => games);
 };
 
 export const getEmptyGames = async () => {

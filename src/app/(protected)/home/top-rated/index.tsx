@@ -11,12 +11,23 @@ const TopRated = async () => {
     <Box title='Top rated games'>
       <ItemGrid
         data={games}
-        render={(game, index, library) => {
+        render={(game, index, library, wishlist) => {
           const isInLibrary = library.some(
             (libGame) => libGame.rawg_id === game.id.toString()
           );
 
-          return <GameItem game={game} key={index} isInLibrary={isInLibrary} />;
+          const isWishlisted = wishlist.some(
+            (wishlistGame) => wishlistGame.rawg_id === game.id.toString()
+          );
+
+          return (
+            <GameItem
+              game={game}
+              key={index}
+              isInLibrary={isInLibrary}
+              isWishlisted={isWishlisted}
+            />
+          );
         }}
       />
     </Box>

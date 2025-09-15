@@ -108,6 +108,7 @@ export const gamesRelations = relations(games, ({ many }) => ({
   gamesToGenres: many(gamesToGenres),
   gamesToUsers: many(gamesToUsers),
   screenshots: many(screenshots),
+  wishlistedGames: many(wishlistedGames),
 }));
 
 export const screenshots = pgTable('screenshots', {
@@ -126,6 +127,15 @@ export const screenshotsRelations = relations(screenshots, ({ one }) => ({
     references: [games.id],
   }),
 }));
+
+export const wishlistedGames = pgTable('wishlisted_games', {
+  game_id: text('game_id')
+    .notNull()
+    .references(() => games.rawg_id),
+  user_id: text('user_id')
+    .notNull()
+    .references(() => user.id),
+});
 
 export const gamesToPlatforms = pgTable('games_to_platforms', {
   game_id: text('game_id')
@@ -166,6 +176,7 @@ export const gamesToUsersRelations = relations(gamesToUsers, ({ one }) => ({
 
 export const userRelations = relations(user, ({ many }) => ({
   gamesToUsers: many(gamesToUsers),
+  wishlistedGames: many(wishlistedGames),
 }));
 
 export const gamesToPlatformsRelations = relations(

@@ -1,4 +1,4 @@
-import { getUserLibrary } from '@/db/queries';
+import { getUserLibrary, getUserWishlist } from '@/db/queries';
 import { auth } from '@/lib/auth';
 import { Game } from '@/types/db';
 import { headers } from 'next/headers';
@@ -10,7 +10,7 @@ type Props<
   }
 > = {
   data: T[];
-  render: (item: T, index: number, library: Game[]) => ReactNode;
+  render: (item: T, index: number, library: Game[], wishlist: Game[]) => ReactNode;
 };
 
 const ItemGrid = async <
@@ -26,12 +26,13 @@ const ItemGrid = async <
   });
 
   const library = session ? await getUserLibrary(session.user.id) : [];
+  const wishlist = session ? await getUserWishlist(session.user.id) : [];
 
   return (
     <div
       className={`grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 justify-items-center gap-2`}
     >
-      {data.map((item) => render(item, item.id, library))}
+      {data.map((item) => render(item, item.id, library, wishlist))}
     </div>
   );
 };

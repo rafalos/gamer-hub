@@ -18,6 +18,7 @@ import {
 type Props = {
   game: Game;
   isInLibrary: boolean;
+  isWishlisted: boolean;
 };
 
 const platformColors: Record<string, string> = {
@@ -27,7 +28,7 @@ const platformColors: Record<string, string> = {
   nintendo: 'bg-nintendo',
 };
 
-const GameItem = ({ game, isInLibrary }: Props) => {
+const GameItem = ({ game, isInLibrary, isWishlisted }: Props) => {
   const { name, platforms, background_image, id, metacritic } = game;
 
   const availablePlatforms = platforms.map(({ platform }) =>
@@ -87,7 +88,7 @@ const GameItem = ({ game, isInLibrary }: Props) => {
           {name}
         </CardFooter>
       </Link>
-      <Cta id={id} isInLibrary={isInLibrary} />
+      <Cta id={id} isInLibrary={isInLibrary} isWishlisted={isWishlisted} />
     </Card>
   );
 };
