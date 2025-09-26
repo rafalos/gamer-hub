@@ -14,15 +14,22 @@ type Props = {
 
 const Cta = ({ id, isInLibrary, isWishlisted }: Props) => {
   const increaseLibrary = useFooterStore((state) => state.increaseLibraryCount);
-  const [addedSuccesfully, action, pending] = useActionState(ctaAction, false);
+  const [addedToLibrary, libraryAction, libraryPending] = useActionState(
+    ctaAction,
+    false
+  );
+  const [_addedToWishlist, wishlistAction, wishlistPending] = useActionState(
+    ctaAction,
+    false
+  );
 
   useEffect(() => {
-    if (addedSuccesfully) increaseLibrary();
-  }, [addedSuccesfully, increaseLibrary]);
+    if (addedToLibrary) increaseLibrary();
+  }, [addedToLibrary, increaseLibrary]);
 
   return (
     <div className='flex divide-x'>
-      {pending ? (
+      {libraryPending || wishlistPending ? (
         <span className='mx-auto p-1'>
           <LoaderCircle className='w-4 animate-spin' />
         </span>
@@ -35,7 +42,7 @@ const Cta = ({ id, isInLibrary, isWishlisted }: Props) => {
             onClick={() => {
               if (isInLibrary) return;
               startTransition(() => {
-                action({
+                libraryAction({
                   actionType: 'library',
                   rawg_id: id.toString(),
                 });
@@ -61,7 +68,7 @@ const Cta = ({ id, isInLibrary, isWishlisted }: Props) => {
             onClick={() => {
               if (isWishlisted) return;
               startTransition(() => {
-                action({
+                wishlistAction({
                   actionType: 'wishlist',
                   rawg_id: id.toString(),
                 });
