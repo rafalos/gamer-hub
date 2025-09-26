@@ -9,12 +9,43 @@ import React from 'react';
 
 export const revalidate = 86400; //revalidate every 24h
 
-export async function generateStaticParams() {
-  const gameIDS = await readFile('/tmp/popular.txt', {
-    encoding: 'utf-8',
-  });
+const POPULAR_IDS = [
+  '3498',
+  '3328',
+  '4200',
+  '4291',
+  '5286',
+  '13536',
+  '12020',
+  '5679',
+  '28',
+  '4062',
+  '13537',
+  '802',
+  '3439',
+  '4286',
+  '32',
+  '58175',
+  '3070',
+  '3939',
+  '1030',
+  '11859',
+];
 
-  return gameIDS.split(',').map((id) => ({
+export async function generateStaticParams() {
+  let gameIDs: string[] = []
+
+  try {
+    const output = await readFile('/tmp/popular.txt', {
+      encoding: 'utf-8',
+    })
+
+    gameIDs = output.split(',')
+  } catch {
+    gameIDs = POPULAR_IDS
+  }
+
+  return gameIDs.map((id) => ({
     rawg_id: id.toString(),
   }));
 }
