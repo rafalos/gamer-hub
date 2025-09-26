@@ -1,8 +1,17 @@
 import { GamesResponse } from '@/types/api';
 import { getRedisClient } from '../redis';
 import type { Game, ScreenshotsResponse } from '@/types/api';
-import { GAMES_URL, PLATFORMS, getGameByIdUrl, getScreenshotsUrl } from './helpers';
+import {
+  GAMES_URL,
+  PLATFORMS,
+  getGameByIdUrl,
+  getScreenshotsUrl,
+} from './helpers';
 import axios from 'axios';
+import { writeFile } from 'fs/promises';
+import path from 'path';
+
+const POPULAR_IDS_PATH = path.join(process.cwd(), 'data', 'popular.txt');
 
 export const getByName = async (query: string) => {
   const redisClient = await getRedisClient();
@@ -43,6 +52,11 @@ export const getPopular = async (platform?: string) => {
   );
 
   const games = response.data.results;
+
+  const gameIDs = games.map((game) => game.id);
+
+  await writeFile(POPULAR_IDS_PATH, gameIDs.join(','), 'utf-8');
+
   await redisClient.setEx(CACHE_KEY, 60 * 60, JSON.stringify(games));
   return games;
 };
@@ -75,7 +89,7 @@ export const getGamesCount = async () => {
 export const getScreenshots = async (id: string) => {
   const url = getScreenshotsUrl(id);
 
-  const response = await axios.get<ScreenshotsResponse>(url)
+  const response = await axios.get<ScreenshotsResponse>(url);
 
-  return response.data.results
-}
+  return response.data.results;
+};

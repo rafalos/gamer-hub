@@ -3,8 +3,22 @@ import Processor from '@/app/(protected)/games/[rawg_id]/Processor';
 import Screenshots from '@/app/(protected)/games/[rawg_id]/Screenshots';
 import { getGameWithDetailsByRawgId, getScreenshotsOfGame } from '@/db/queries';
 import { fetchGame } from '@/lib/server/fetchers';
+import { readFile } from 'fs/promises';
 import Image from 'next/image';
+import path from 'path';
 import React from 'react';
+
+export const revalidate = 86400; //revalidate every 24h
+
+export async function generateStaticParams() {
+  const gameIDS = await readFile(path.join(process.cwd(), 'data/popular.txt'), {
+    encoding: 'utf-8',
+  });
+
+  return gameIDS.split(',').map((id) => ({
+    rawg_id: id.toString(),
+  }));
+}
 
 const Game = async ({
   params,
