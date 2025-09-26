@@ -11,7 +11,7 @@ import axios from 'axios';
 import { writeFile } from 'fs/promises';
 import path from 'path';
 
-const POPULAR_IDS_PATH = path.join(process.cwd(), 'data', 'popular.txt');
+const POPULAR_IDS_PATH = path.join(process.cwd(), 'tmp', 'popular.txt');
 
 export const getByName = async (query: string) => {
   const redisClient = await getRedisClient();
