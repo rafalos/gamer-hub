@@ -22,19 +22,11 @@
     "skipLibCheck": true,
     "resolveJsonModule": true
   },
-    "ts-node": {
-    "compilerOptions": {
-      "baseUrl": "..",
-      "paths": {
-        "@/*": ["src/*"]
-      },
-      "module": "commonjs"
-    }
-  },
   "include": [
     "next-env.d.ts",
     "src/**/*",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "vitest-setup.ts"
   ],
   "exclude": [
     "node_modules",
