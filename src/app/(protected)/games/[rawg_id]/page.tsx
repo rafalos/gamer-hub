@@ -11,7 +11,7 @@ import React from 'react';
 export const revalidate = 86400; //revalidate every 24h
 
 export async function generateStaticParams() {
-  const gameIDS = await readFile(path.join(process.cwd(), 'data/popular.txt'), {
+  const gameIDS = await readFile(path.join(process.cwd(), 'tmp/popular.txt'), {
     encoding: 'utf-8',
   });
 
