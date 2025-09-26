@@ -5,13 +5,12 @@ import { getGameWithDetailsByRawgId, getScreenshotsOfGame } from '@/db/queries';
 import { fetchGame } from '@/lib/server/fetchers';
 import { readFile } from 'fs/promises';
 import Image from 'next/image';
-import path from 'path';
 import React from 'react';
 
 export const revalidate = 86400; //revalidate every 24h
 
 export async function generateStaticParams() {
-  const gameIDS = await readFile(path.join(process.cwd(), 'tmp/popular.txt'), {
+  const gameIDS = await readFile('/tmp/popular.txt', {
     encoding: 'utf-8',
   });
 
